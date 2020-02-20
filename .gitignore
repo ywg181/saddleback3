@@ -1,0 +1,8 @@
+.idea
+.cache
+.tox
+*.pyc
+*.tmp
+.pylint.d
+opentest.db
+venv
