@@ -1,4 +1,5 @@
-from opentest.core.process_objects import Measurement
+from components.code_modules.sb_communication.sb_ssh import SbSsh
+from opentest.core.process_objects import Measurement, Spec
 from opentest.core.process_objects import ProcessStatus
 from opentest.core.process_step import ProcessStep
 
@@ -11,17 +12,20 @@ class RecordFruInfoStep(ProcessStep):
 
     def run(self):
 
-        telnet_ixion = self.variables['TELNET_IXION']
+        ixion = self.variables['IXION']
 
-        fru_info_str = telnet_ixion.query('gsys -k fru info', read_timeout=10)
+        fru_info_str = ixion.ssh.query('gsys -k fru info', timeout=10).stdout
 
-        measurement_status = ProcessStatus.PASSED
-        if '85213281' not in fru_info_str:
-            measurement_status = ProcessStatus.FAILED
+        # value = 'hello world this should fail'
+        # expected_value = 'Hello World'
+        #
+        # self.add_data(
+        #     name='Sentence we read',
+        #     value=value,
+        #     spec=Spec('==', expected_value))
 
         self.add_measurement(Measurement(
             'FRU Info',
-            fru_info_str,
-            status=measurement_status))
+            fru_info_str))
 
         return self.set_status()
