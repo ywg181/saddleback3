@@ -1,4 +1,4 @@
 # TODO: See if latest paramiko works (remove ==2.4.2)
-paramiko==2.4.2
+paramiko==3.4.0
 # TODO: See if latest scp works (remove ==0.13.2)
 scp==0.13.2
